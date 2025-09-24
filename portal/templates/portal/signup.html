@@ -1,0 +1,46 @@
+{% extends 'portal/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-lg-5 mx-auto">
+
+    <div class="card shadow-sm border-0 mt-5">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center text-primary mb-4">📝 Create an Account</h2>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          {% for field in form %}
+            <div class="mb-3">
+              <label for="{{ field.id_for_label }}" class="form-label"><strong>{{ field.label }}</strong></label>
+              {{ field }}
+              {% if field.help_text %}
+                <div class="form-text text-muted">{{ field.help_text }}</div>
+              {% endif %}
+              {% for error in field.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+          </div>
+        </form>
+
+        <p class="text-center mt-3">
+          Already have an account? <a href="{% url 'login' %}">Login here</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

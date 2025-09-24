@@ -1,0 +1,34 @@
+{% extends 'portal/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+
+    <!-- Welcome Card -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body text-center p-5">
+        <h2 class="card-title text-primary mb-3">
+          👋 Welcome, {{ user.username }}!
+        </h2>
+        <p class="text-muted fs-5">
+          Use the navigation above to submit a new complaint or check the status of your existing ones.
+        </p>
+        <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+          <a href="{% url 'submit_complaint' %}" class="btn btn-primary btn-lg">
+            ✍️ Submit Complaint
+          </a>
+          <a href="{% url 'my_complaints' %}" class="btn btn-outline-secondary btn-lg">
+            📋 My Complaints
+          </a>
+          {% if user.is_staff %}
+            <a href="{% url 'department_dashboard' %}" class="btn btn-success btn-lg">
+              🏢 Department Dashboard
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "portal/base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 col-lg-6 mx-auto">
+
+    <!-- Complaint Submission Card -->
+    <div class="card shadow-sm border-0 mt-5">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center text-primary mb-4">📢 Submit a Complaint</h2>
+
+        {% if form %}
+          <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            {% for field in form %}
+              <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label"><strong>{{ field.label }}</strong></label>
+                {{ field }}
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+                {% for error in field.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">Submit Complaint</button>
+            </div>
+          </form>
+        {% else %}
+          <div class="alert alert-danger">⚠️ No form available in context.</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

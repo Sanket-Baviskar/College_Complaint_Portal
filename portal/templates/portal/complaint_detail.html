@@ -1,0 +1,118 @@
+{% extends 'portal/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-10 mx-auto">
+
+    <!-- Complaint Header -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h2 class="card-title text-primary mb-2">
+          Complaint #{{ complaint.id }} — {{ complaint.title }}
+        </h2>
+        <p class="text-muted small mb-0">
+          Submitted by <strong>{{ complaint.user.username }}</strong> 
+          on {{ complaint.created_at|date:'Y-m-d H:i' }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Complaint Details -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h5 class="card-subtitle mb-3 text-secondary">Details</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Department:</strong> {{ complaint.department.name }}
+          </li>
+          <li class="list-group-item">
+            <strong>Status:</strong> 
+            <span class="badge 
+              {% if complaint.status == 'Resolved' %} bg-success 
+              {% elif complaint.status == 'Pending' %} bg-warning text-dark 
+              {% else %} bg-secondary {% endif %}">
+              {{ complaint.status }}
+            </span>
+          </li>
+          <li class="list-group-item">
+            <strong>Priority:</strong> 
+            <span class="badge 
+              {% if complaint.priority == 'High' %} bg-danger 
+              {% elif complaint.priority == 'Medium' %} bg-warning text-dark 
+              {% else %} bg-info {% endif %}">
+              {{ complaint.priority }}
+            </span>
+          </li>
+        </ul>
+
+        <div class="mt-3">
+          <p class="fw-bold mb-1">Description:</p>
+          <div class="alert alert-light border rounded">
+            {{ complaint.description|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complaint Attachment -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h5 class="card-subtitle mb-3 text-secondary">Attachment</h5>
+
+        {% if complaint.attachment %}
+          {% with complaint.attachment.url|lower as file_url %}
+            
+            {# ---- IMAGE ---- #}
+            {% if file_url|slice:"-4:" == ".jpg" or file_url|slice:"-5:" == ".jpeg" or file_url|slice:"-4:" == ".png" or file_url|slice:"-4:" == ".gif" %}
+              <img src="{{ complaint.attachment.url }}" 
+                   alt="Attachment" 
+                   class="img-fluid rounded shadow-sm border" 
+                   style="max-height:400px;">
+
+            {# ---- VIDEO ---- #}
+            {% elif file_url|slice:"-4:" == ".mp4" or file_url|slice:"-4:" == ".ogg" or file_url|slice:"-5:" == ".webm" %}
+              <video class="rounded shadow-sm border w-100" controls>
+                <source src="{{ complaint.attachment.url }}" type="video/{{ file_url|slice:"-3:" }}">
+                Your browser does not support the video tag.
+              </video>
+
+            {# ---- AUDIO ---- #}
+            {% elif file_url|slice:"-4:" == ".mp3" or file_url|slice:"-4:" == ".wav" %}
+              <audio class="w-100" controls>
+                <source src="{{ complaint.attachment.url }}">
+                Your browser does not support the audio element.
+              </audio>
+
+            {# ---- OTHER FILE ---- #}
+            {% else %}
+              <a href="{{ complaint.attachment.url }}" target="_blank" class="btn btn-outline-primary">
+                📂 Download Attachment
+              </a>
+            {% endif %}
+
+          {% endwith %}
+        {% else %}
+          <p class="text-muted"><em>No attachment provided</em></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Status Update Form -->
+    {% if form %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="card-subtitle mb-3 text-secondary">Update Status (Staff Only)</h5>
+        <form method="post" class="row g-3">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">💾 Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+[
+  {
+    "model": "portal.department",
+    "pk": 1,
+    "fields": {
+      "name": "First Year"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 2,
+    "fields": {
+      "name": "Computer Engineering"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 3,
+    "fields": {
+      "name": "Mechanical Engineering"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 4,
+    "fields": {
+      "name": "Electrical Engineering"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 5,
+    "fields": {
+      "name": "Library"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 6,
+    "fields": {
+      "name": "Hostel"
+    }
+  },
+  {
+    "model": "portal.department",
+    "pk": 7,
+    "fields": {
+      "name": "Cafeteria"
+    }
+  }
+]

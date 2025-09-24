@@ -1,0 +1,31 @@
+{% extends 'portal/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-lg-4 mx-auto">
+
+    <!-- Login Card -->
+    <div class="card shadow-sm border-0 mt-5">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center text-primary mb-4">🔐 Login</h2>
+
+        <form method="post" class="needs-validation" novalidate>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+          </div>
+        </form>
+
+        <hr class="my-4">
+
+        <p class="text-center mb-0">
+          Don’t have an account?
+          <a href="{% url 'signup' %}" class="text-decoration-none">Sign up here</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

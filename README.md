@@ -46,4 +46,5 @@ Dashboard will auto-filter by that department by default. You can also filter vi
 ## Notes
 - Uses SQLite (db.sqlite3 created on first migrate).
 - Attachments will be stored in `MEDIA_ROOT` if you add MEDIA settings; otherwise uploaded files work in development.
-- For production, configure ALLOWED_HOSTS, DEBUG, STATIC, and MEDIA properly.
+- For production, configure ALLOWED_HOSTS, DEBUG, STATIC, and MEDIA properlyssdfsd.
+ 

@@ -1,27 +1,39 @@
 {% extends 'portal/base.html' %}
 
+<!-- ✅ ADDED: Override background image for login page -->
+{% block bg_image %}/static/portal/losn_bg.jpg{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-md-6 col-lg-4 mx-auto">
 
-    <!-- Login Card -->
-    <div class="card shadow-sm border-0 mt-5">
+    <!-- ✅ MODIFIED: Added semi-transparent background for readability -->
+    <div class="card shadow-sm border-0 mt-5" 
+         style="background-color: rgba(255, 255, 255, 0.92);">
+
       <div class="card-body p-4">
+        <!-- ✅ MODIFIED: Updated title color to match brown theme -->
         <h2 class="card-title text-center text-primary mb-4">🔐 Login</h2>
 
+        <!-- ✅ FORM: Handles login authentication -->
         <form method="post" class="needs-validation" novalidate>
           {% csrf_token %}
           {{ form.as_p }}
+
           <div class="d-grid">
+            <!-- ✅ Button color adjusted to use brown primary theme -->
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
           </div>
         </form>
 
         <hr class="my-4">
 
+        <!-- ✅ Added subtle text styling -->
         <p class="text-center mb-0">
           Don’t have an account?
-          <a href="{% url 'signup' %}" class="text-decoration-none">Sign up here</a>
+          <a href="{% url 'signup' %}" class="text-decoration-none text-primary">
+            Sign up here
+          </a>
         </p>
       </div>
     </div>

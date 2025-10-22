@@ -1,27 +1,44 @@
 {% extends 'portal/base.html' %}
 
+<!-- ✅ ADDED: Custom background image for Home Page -->
+{% block bg_image %}/static/portal/login_bg.jpg{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-lg-8 mx-auto">
 
-    <!-- Welcome Card -->
-    <div class="card shadow-sm border-0 mb-4">
+    <!-- ✅ MODIFIED: Added semi-transparent white background for readability -->
+    <div class="card shadow-sm border-0 mb-4"
+         style="background-color: rgba(255, 255, 255, 0.93);">
+
+      <!-- ✅ CARD BODY -->
       <div class="card-body text-center p-5">
+        
+        <!-- ✅ Welcome message styled with brown theme -->
         <h2 class="card-title text-primary mb-3">
           👋 Welcome, {{ user.username }}!
         </h2>
+
         <p class="text-muted fs-5">
           Use the navigation above to submit a new complaint or check the status of your existing ones.
         </p>
+
+        <!-- ✅ Action buttons styled consistently -->
         <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
-          <a href="{% url 'submit_complaint' %}" class="btn btn-primary btn-lg">
+
+          <!-- Submit Complaint button -->
+          <a href="{% url 'submit_complaint' %}" class="btn btn-primary btn-lg shadow-sm">
             ✍️ Submit Complaint
           </a>
-          <a href="{% url 'my_complaints' %}" class="btn btn-outline-secondary btn-lg">
+
+          <!-- My Complaints button -->
+          <a href="{% url 'my_complaints' %}" class="btn btn-outline-secondary btn-lg shadow-sm">
             📋 My Complaints
           </a>
+
+          <!-- ✅ Staff-only button (conditionally displayed) -->
           {% if user.is_staff %}
-            <a href="{% url 'department_dashboard' %}" class="btn btn-success btn-lg">
+            <a href="{% url 'department_dashboard' %}" class="btn btn-success btn-lg shadow-sm">
               🏢 Department Dashboard
             </a>
           {% endif %}

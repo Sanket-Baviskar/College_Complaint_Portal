@@ -1,47 +1,110 @@
+
 {% extends "portal/base.html" %}
-  {% block bg_image %}/static/portal/login_bg.jpg{% endblock %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+<!-- ✅ Background image -->
+{% block bg_image %}{% static 'portal/login_bg.jpg' %}{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-md-8 col-lg-6 mx-auto">
 
-    <!-- Complaint Submission Card -->
-    <div class="card shadow-sm border-0 mt-5">
+    <!-- ✅ Complaint Submission Card -->
+    <div class="card shadow-lg border-0 mt-5"
+         style="background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-radius: 15px;">
       <div class="card-body p-4">
-        <h2 class="card-title text-center text-primary mb-4">📢 Submit a Complaint</h2>
+
+        <!-- ✅ Title Section -->
+        <div class="text-center mb-4">
+          <h2 class="card-title text-primary fw-bold mb-2">📢 Submit a Complaint</h2>
+          <p class="text-muted mb-0">Please fill out all the required details below.</p>
+        </div>
 
         {% if form %}
           <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
             {% csrf_token %}
 
             {% for field in form %}
-              <div class="mb-3">
-                <label for="{{ field.id_for_label }}" class="form-label"><strong>{{ field.label }}</strong></label>
-                {{ field }}
+              <div class="mb-4">
+                <!-- ✅ Label always on top -->
+                <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary mb-2">
+                  {{ field.label }}
+                </label>
+
+                <!-- ✅ Textbox / Select / Textarea Styling -->
+                {% if field.name == "description" %}
+                  {{ field|add_class:"form-control shadow-sm border-secondary-subtle" }}
+                {% else %}
+                  {{ field|add_class:"form-control shadow-sm border-secondary-subtle" }}
+                {% endif %}
+
+                <!-- ✅ Help text & error messages -->
                 {% if field.help_text %}
-                  <div class="form-text">{{ field.help_text }}</div>
+                  <div class="form-text text-muted small mt-1">{{ field.help_text }}</div>
                 {% endif %}
                 {% for error in field.errors %}
-                  <div class="text-danger small">{{ error }}</div>
+                  <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               </div>
             {% endfor %}
 
             {% if form.non_field_errors %}
-              <div class="alert alert-danger">
+              <div class="alert alert-danger shadow-sm">
                 {{ form.non_field_errors }}
               </div>
             {% endif %}
 
-            <div class="d-grid">
-              <button type="submit" class="btn btn-success btn-lg">Submit Complaint</button>
+            <!-- ✅ Submit Button -->
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary btn-lg shadow-sm"
+                      style="background-color: var(--brown); border: none;">
+                🚀 Submit Complaint
+              </button>
             </div>
           </form>
         {% else %}
-          <div class="alert alert-danger">⚠️ No form available in context.</div>
+          <div class="alert alert-danger text-center shadow-sm mt-3">
+            ⚠️ No form available in context.
+          </div>
         {% endif %}
+
       </div>
     </div>
 
   </div>
 </div>
+
+<!-- ✅ Custom Textbox Styling -->
+<style>
+  .form-control {
+    border: 1px solid #bca895;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: all 0.2s ease-in-out;
+    font-size: 1rem;
+  }
+
+  .form-control:focus {
+    border-color: var(--brown);
+    box-shadow: 0 0 0 0.2rem rgba(102, 54, 20, 0.25);
+  }
+
+  textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
 {% endblock %}
+

@@ -1,46 +1,114 @@
 {% extends 'portal/base.html' %}
-    {% block bg_image %}/static/portal/losn_bg.jpg{% endblock %}
+{% load static %}
+
+
+<!-- ✅ Set custom background image -->
+  {% block bg_image %}{% static 'portal/losn_bg.jpg' %}{% endblock %}
+
 {% block content %}
 <div class="row">
   <div class="col-md-6 col-lg-5 mx-auto">
 
-    <div class="card shadow-sm border-0 mt-5">
+    <!-- ✅ Signup Card -->
+    <div class="card shadow-lg border-0 mt-5"
+         style="background-color: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 15px;">
       <div class="card-body p-4">
-        <h2 class="card-title text-center text-primary mb-4">📝 Create an Account</h2>
 
+        <!-- ✅ Title -->
+        <div class="text-center mb-4">
+          <h2 class="card-title text-primary fw-bold mb-2">📝 Create an Account</h2>
+          <p class="text-muted">Join the College Complaint Portal and raise your voice easily.</p>
+        </div>
+
+        <!-- ✅ Signup Form -->
         <form method="post" novalidate>
           {% csrf_token %}
 
           {% for field in form %}
-            <div class="mb-3">
-              <label for="{{ field.id_for_label }}" class="form-label"><strong>{{ field.label }}</strong></label>
+            <div class="mb-4">
+              <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary mb-1">
+                {{ field.label }}
+              </label>
               {{ field }}
               {% if field.help_text %}
-                <div class="form-text text-muted">{{ field.help_text }}</div>
+                <div class="form-text text-muted small">{{ field.help_text }}</div>
               {% endif %}
               {% for error in field.errors %}
-                <div class="text-danger small">{{ error }}</div>
+                <div class="text-danger small mt-1">{{ error }}</div>
               {% endfor %}
             </div>
           {% endfor %}
 
           {% if form.non_field_errors %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger shadow-sm">
               {{ form.non_field_errors }}
             </div>
           {% endif %}
 
-          <div class="d-grid">
-            <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+          <!-- ✅ Signup Button -->
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-lg shadow-sm"
+                    style="background-color: var(--brown); color: #fff; border: none;">
+              🚀 Sign Up
+            </button>
           </div>
         </form>
 
-        <p class="text-center mt-3">
-          Already have an account? <a href="{% url 'login' %}">Login here</a>
+        <!-- ✅ Redirect to Login -->
+        <p class="text-center mt-3 mb-0 text-muted">
+          Already have an account?
+          <a href="{% url 'login' %}" class="text-decoration-none text-primary fw-semibold">Login here</a>
         </p>
       </div>
     </div>
 
   </div>
 </div>
+
+<!-- ✅ Form Field Styling -->
+<style>
+  /* Input & Textbox look */
+  input, select, textarea {
+    border: 1px solid #cbb9a6 !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    width: 100%;
+    background-color: #fff !important;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Focus glow */
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--brown) !important;
+    box-shadow: 0 0 0 0.2rem rgba(102, 54, 20, 0.25) !important;
+    outline: none !important;
+  }
+
+  /* Button hover */
+  .btn:hover {
+    background-color: #4f2b0e !important;
+    transform: scale(1.02);
+  }
+
+  /* Card hover effect */
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Label text */
+  .form-label {
+    font-weight: 600;
+  }
+
+  /* Placeholder text */
+  input::placeholder, textarea::placeholder {
+    color: #bfa995 !important;
+  }
+</style>
+
 {% endblock %}

@@ -15,6 +15,11 @@
     :root {
       --brown: #663614;
       --brown-light: #663614;
+      input[readonly], textarea[readonly],
+      input[disabled], textarea[disabled] {
+      caret-color: transparent !important;
+}
+
     }
 
     .bg-primary { background-color: var(--brown) !important; }
@@ -49,19 +54,21 @@
 </head>
 
 <!-- ✅ Dynamic background image support -->
-  <body 
-    style="
-      background-image: url({% block bg_image %}{% static 'portal/bg.jpg' %}{% endblock %});
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-position: center;
-    "
-  >
-
+<body 
+  style="
+    background-image: url({% block bg_image %}{% static 'portal/bg.jpg' %}{% endblock %});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    
+  "
+>
+  
   <!-- ✅ Header Section -->
   <header class="bg-primary text-white p-3 mb-4 shadow-sm">
     <div class="container d-flex flex-wrap align-items-center justify-content-between">
+      
 
       <!-- ✅ College Logo (Square Version) -->
       <div class="d-flex align-items-center gap-2">
